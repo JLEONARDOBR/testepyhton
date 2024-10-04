@@ -1,0 +1,96 @@
+/* Fundo azul claro */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #ADD8E6;
+    font-family: Arial, sans-serif;
+}
+
+/* Centralizar o container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Estilo do box de login */
+.login-box {
+    background-color: white;
+    padding: 30px;
+    border: 2px solid black;
+    width: 350px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+h1 {
+    margin: 0;
+    font-size: 24px;
+    text-align: left;
+}
+
+p {
+    margin-top: 5px;
+    font-size: 12px;
+    text-align: left;
+}
+
+/* Campos de input */
+.input-box {
+    position: relative;
+    margin: 15px 0;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    font-size: 14px;
+    outline: none;
+}
+
+input::placeholder {
+    color: #999;
+}
+
+#toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+/* Botão de Esqueci minha senha */
+.forgot-password {
+    display: block;
+    font-size: 12px;
+    color: blue;
+    text-decoration: underline;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+/* Botão Acessar */
+.login-btn {
+    width: 100%;
+    background-color: #87CEEB;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+/* Texto de criar uma conta */
+.create-account {
+    font-size: 12px;
+}
+
+.create-account a {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}

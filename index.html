@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="login-box">
+        <h1>Login</h1>
+        <p>Digite seus dados para acessar</p>
+
+        <div class="input-box">
+            <input type="email" id="email" placeholder="Digite seu e-mail">
+        </div>
+
+        <div class="input-box">
+            <input type="password" id="senha" placeholder="Digite sua senha">
+            <span class="toggle-password" onclick="togglePassword()">👁️</span>
+        </div>
+
+        <a href="#" class="forgot-password">Esqueci minha senha</a>
+
+        <button class="login-btn" onclick="login()">ACESSAR</button>
+
+        <p>Ainda não tem uma conta? <a href="cadastro.html" class="create-account">Crie uma agora.</a></p> <!-- Aqui adiciona o link para a nova tela -->
+    </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

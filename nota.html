@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nota de responsabilidade e consentimento uso dos dados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #007bff;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Nota de responsabilidade e consentimento uso dos dados</h2>
+        <p>
+            Ao clicar em 'Confirmar Cadastro', você concorda com os Termos de Uso e Política de Privacidade da FastProBR e confirma a veracidade das informações fornecidas, autorizando o armazenamento e o uso desses dados para as finalidades descritas em nossos documentos legais. Recomendamos a leitura completa de nossos Termos de Uso para compreender todos os detalhes sobre o tratamento dos seus dados.
+        </p>
+        <button id="confirmar-cadastro">Confirmar Cadastro</button>
+    </div>
+
+    <script>
+        // Função para redirecionar para a próxima página após confirmar o cadastro
+        document.getElementById('confirmar-cadastro').addEventListener('click', function() {
+            // Aqui você pode adicionar a lógica para enviar os dados, se necessário
+            alert('Cadastro confirmado com sucesso!'); // Mensagem de confirmação
+            window.location.href = 'realizado.html'; // Substitua por sua próxima página
+        });
+    </script>
+</body>
+</html>

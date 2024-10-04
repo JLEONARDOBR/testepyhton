@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro do Celular e E-mail</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+        .button-container button {
+            flex: 1;
+        }
+        #prosseguir {
+            display: none; /* Inicialmente invisível */
+            margin-top: 20px;
+        }
+        .confirmacao-texto {
+            color: green;
+            display: none; /* Inicialmente invisível */
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="login-box">
+        <h1>Cadastro</h1>
+
+        <!-- Nome que gostaria de ser chamado -->
+        <div class="input-box">
+            <input type="text" id="nome" placeholder="Digite o nome que gostaria de ser chamado">
+        </div>
+
+        <!-- Celular -->
+        <div class="input-box">
+            <input type="tel" id="celular" placeholder="Digite seu celular" oninput="atualizarConfirmacao()">
+        </div>
+
+        <!-- Texto com celular preenchido -->
+        <p id="confirmar-celular">Seu celular é: <span id="celular-preenchido"></span>?</p>
+
+        <!-- Botões para corrigir e confirmar celular -->
+        <div class="button-container">
+            <button class="login-btn" id="corrigir-celular" onclick="corrigirCelular()">Corrigir</button>
+            <button class="login-btn" id="confirmar-celular-btn" onclick="confirmarCelular()" disabled>Confirmar</button>
+        </div>
+        <!-- Texto de confirmação do celular -->
+        <p id="confirmacao-celular" class="confirmacao-texto">Celular confirmado!</p>
+
+        <!-- E-mail -->
+        <div class="input-box">
+            <input type="email" id="email" placeholder="Digite seu e-mail" oninput="atualizarConfirmacao()">
+        </div>
+
+        <!-- Texto com e-mail preenchido -->
+        <p id="confirmar-email">Seu e-mail é: <span id="email-preenchido"></span>?</p>
+
+        <!-- Botões para corrigir e confirmar e-mail -->
+        <div class="button-container">
+            <button class="login-btn" id="corrigir-email" onclick="corrigirEmail()">Corrigir</button>
+            <button class="login-btn" id="confirmar-email-btn" onclick="confirmarEmail()" disabled>Confirmar</button>
+        </div>
+        <!-- Texto de confirmação do e-mail -->
+        <p id="confirmacao-email" class="confirmacao-texto">E-mail confirmado!</p>
+
+        <!-- Botão para prosseguir, visível após confirmação de ambos os campos -->
+        <button class="login-btn" id="prosseguir" onclick="prosseguir()">Prosseguir</button>
+    </div>
+</div>
+
+<script src="cadastro.js"></script>
+
+</body>
+</html>

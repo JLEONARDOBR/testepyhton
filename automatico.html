@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload de Documento</title>
+    <style>
+        body {
+            background: linear-gradient(to right, #00aaff, #00ffcc);
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: #333;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-top: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        input[type="file"] {
+            margin: 20px 0;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1.1em;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            display: none; /* Esconde inicialmente */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Upload de Documento</h1>
+        <p>Por favor, faça o upload da sua foto de documento (CNH ou RG).</p>
+        <form id="uploadForm">
+            <input type="file" name="file" accept="image/jpeg" required>
+            <input type="submit" value="Upload">
+        </form>
+        <div id="response"></div>  <!-- Div para mostrar a resposta -->
+    </div>
+
+    <script>
+        document.getElementById('uploadForm').onsubmit = function(event) {
+            event.preventDefault(); // Impede o envio padrão do formulário
+
+            const formData = new FormData(this);
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json()) // Espera uma resposta JSON
+            .then(data => {
+                document.getElementById('response').innerHTML = "<h2>Resposta do OCR:</h2><pre>" + data.ocr_text + "</pre>"; // Mostra o texto extraído
+                document.getElementById('response').style.display = 'block'; // Exibe a div
+            })
+            .catch(error => {
+                document.getElementById('response').innerHTML = "Erro: " + error; // Mostra erro
+                document.getElementById('response').style.display = 'block'; // Exibe a div
+            });
+        };
+    </script>
+</body>
+</html>

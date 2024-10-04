@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro das Credenciais de Acesso</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d0e6f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: calc(100% - 40px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .eye-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 18px;
+        }
+        .input-group.password {
+            margin-bottom: 25px;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #007bff;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro das Credenciais de Acesso</h2>
+        <div class="section">
+            <p>Usuário: <span id="email-cadastrado"></span></p>
+            <div class="input-group password">
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" placeholder="Digite sua senha">
+                <button class="eye-icon" id="toggle-senha">👁️</button>
+            </div>
+            <div class="input-group password">
+                <label for="confirmar-senha">Confirmar Senha:</label>
+                <input type="password" id="confirmar-senha" placeholder="Confirme sua senha">
+                <button class="eye-icon" id="toggle-confirmar-senha">👁️</button>
+            </div>
+            <button id="prosseguir">Prosseguir</button>
+        </div>
+    </div>
+
+    <script>
+        // Função para carregar o e-mail do localStorage
+        function carregarDados() {
+            const dadosUsuario = JSON.parse(localStorage.getItem('dadosUsuario'));
+            if (dadosUsuario) {
+                document.getElementById('email-cadastrado').textContent = dadosUsuario.email || 'Não informado';
+            } else {
+                document.getElementById('email-cadastrado').textContent = 'Não informado';
+            }
+        }
+
+        // Função para alternar a visibilidade da senha
+        function toggleSenha() {
+            const senhaInput = document.getElementById('senha');
+            const confirmarSenhaInput = document.getElementById('confirmar-senha');
+            const eyeIconSenha = document.getElementById('toggle-senha');
+            const eyeIconConfirmarSenha = document.getElementById('toggle-confirmar-senha');
+            
+            if (senhaInput.type === 'password') {
+                senhaInput.type = 'text';
+                eyeIconSenha.textContent = '🙈'; // Ícone de olho fechado
+            } else {
+                senhaInput.type = 'password';
+                eyeIconSenha.textContent = '👁️'; // Ícone de olho aberto
+            }
+
+            if (confirmarSenhaInput.type === 'password') {
+                confirmarSenhaInput.type = 'text';
+                eyeIconConfirmarSenha.textContent = '🙈'; // Ícone de olho fechado
+            } else {
+                confirmarSenhaInput.type = 'password';
+                eyeIconConfirmarSenha.textContent = '👁️'; // Ícone de olho aberto
+            }
+        }
+
+        // Função para verificar se as senhas coincidem
+        function verificarSenhas() {
+            const senha = document.getElementById('senha').value;
+            const confirmarSenha = document.getElementById('confirmar-senha').value;
+            
+            if (senha === confirmarSenha) {
+                return true;
+            } else {
+                alert('As senhas não coincidem. Por favor, tente novamente.');
+                return false;
+            }
+        }
+
+        // Função para redirecionar para a próxima tela
+        function prosseguir() {
+            if (verificarSenhas()) {
+                window.location.href = 'quinta-tela.html';
+            }
+        }
+
+        // Inicializar os eventos ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDados();
+            document.getElementById('toggle-senha').addEventListener('click', toggleSenha);
+            document.getElementById('toggle-confirmar-senha').addEventListener('click', toggleSenha);
+            document.getElementById('prosseguir').addEventListener('click', prosseguir);
+        });
+    </script>
+</body>
+</html>

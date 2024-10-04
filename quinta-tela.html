@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro - Continuação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #e0f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 500px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .option-group {
+            margin-bottom: 20px;
+        }
+        .option-group label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .option-group input[type="radio"] {
+            margin-right: 10px;
+        }
+        #modo-selecionado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #007bff;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro - Continuação</h2>
+        <div class="section">
+            <p id="mensagem"></p>
+            <div class="option-group">
+                <label>
+                    <input type="radio" name="modo" value="Manual"> Manual (dados inseridos manualmente)
+                </label>
+                <label>
+                    <input type="radio" name="modo" value="Automático"> Automático (dados inseridos a partir das imagens da frente e do verso do seu documento)
+                </label>
+            </div>
+            <p>Modo Selecionado: <span id="modo-selecionado">Nenhum</span></p>
+            <button id="continuar" disabled>Continuar</button>
+        </div>
+    </div>
+
+    <script>
+        // Função para carregar o nome do localStorage e atualizar a mensagem
+        function carregarDados() {
+            const dadosUsuario = JSON.parse(localStorage.getItem('dadosUsuario'));
+            if (dadosUsuario) {
+                document.getElementById('mensagem').textContent = `${dadosUsuario.nome}, para continuar o seu cadastro o sistema oferece 2 opções distintas:`;
+            } else {
+                document.getElementById('mensagem').textContent = `Usuário, para continuar o seu cadastro o sistema oferece 2 opções distintas:`;
+            }
+        }
+
+        // Variáveis para armazenar as opções de modo
+        const modoSelecionadoSpan = document.getElementById('modo-selecionado');
+        const continuarBtn = document.getElementById('continuar');
+        let modoEscolhido = '';
+
+        // Função para atualizar o modo selecionado
+        function atualizarModoSelecionado(modo) {
+            modoSelecionadoSpan.textContent = modo;
+            modoEscolhido = modo;
+            continuarBtn.disabled = false;  // Habilitar o botão quando uma opção for selecionada
+        }
+
+        // Adicionar eventos de seleção para as opções de rádio
+        const opcoesModo = document.getElementsByName('modo');
+        opcoesModo.forEach(opcao => {
+            opcao.addEventListener('change', function() {
+                atualizarModoSelecionado(this.value);
+            });
+        });
+
+        // Função para redirecionar com base na seleção
+        function prosseguir() {
+            if (modoEscolhido === 'Manual') {
+                window.location.href = 'manual.html';
+            } else if (modoEscolhido === 'Automático') {
+                window.location.href = 'automatico.html';
+            }
+        }
+
+        // Carregar os dados do nome assim que a página for carregada
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDados();
+            continuarBtn.addEventListener('click', prosseguir);
+        });
+    </script>
+</body>
+</html>

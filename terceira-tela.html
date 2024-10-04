@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Dados</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #d0e6f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 600px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 10px;
+        }
+        input[type="text"] {
+            width: 30px;
+            padding: 5px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 15px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            background-color: #007bff;
+            cursor: pointer;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+        .hidden {
+            display: none;
+        }
+        .confirmation-text {
+            margin-top: 10px;
+            font-size: 14px;
+            color: green;
+        }
+        .confirm-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .confirm-container button {
+            margin: 0 10px;
+        }
+        .prosseguir {
+            display: none;
+            background-color: #28a745;
+        }
+        .message {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Confirmação de Dados</h2>
+        <div class="section">
+            <p class="message" id="mensagem-celular"></p>
+            <button id="enviar-codigo-celular">Enviar Código</button>
+            <div id="codigo-celular-recebido" class="hidden">
+                <p>Código Recebido:</p>
+                <div class="input-group">
+                    <input type="text" maxlength="1" id="celular-codigo-1">
+                    <input type="text" maxlength="1" id="celular-codigo-2">
+                    <input type="text" maxlength="1" id="celular-codigo-3">
+                    <input type="text" maxlength="1" id="celular-codigo-4">
+                    <input type="text" maxlength="1" id="celular-codigo-5">
+                    <input type="text" maxlength="1" id="celular-codigo-6">
+                </div>
+                <button id="confirmar-celular-codigo" class="hidden">Confirmar</button>
+                <p id="confirmacao-celular" class="hidden confirmation-text">Confirmado</p>
+            </div>
+        </div>
+        <div class="section">
+            <p class="message" id="mensagem-email"></p>
+            <button id="enviar-codigo-email">Enviar Código</button>
+            <div id="codigo-email-recebido" class="hidden">
+                <p>Código Recebido:</p>
+                <div class="input-group">
+                    <input type="text" maxlength="1" id="email-codigo-1">
+                    <input type="text" maxlength="1" id="email-codigo-2">
+                    <input type="text" maxlength="1" id="email-codigo-3">
+                    <input type="text" maxlength="1" id="email-codigo-4">
+                    <input type="text" maxlength="1" id="email-codigo-5">
+                    <input type="text" maxlength="1" id="email-codigo-6">
+                </div>
+                <button id="confirmar-email-codigo" class="hidden">Confirmar</button>
+                <p id="confirmacao-email" class="hidden confirmation-text">Confirmado</p>
+            </div>
+        </div>
+        <div class="confirm-container">
+            <button id="prosseguir" class="hidden" onclick="prosseguir()">Prosseguir</button>
+        </div>
+        <button onclick="voltar()">Voltar</button>
+    </div>
+
+    <script>
+        // Função para carregar os dados do localStorage
+        function carregarDados() {
+            const dadosUsuario = JSON.parse(localStorage.getItem('dadosUsuario'));
+            if (dadosUsuario) {
+                document.getElementById('mensagem-celular').textContent = `${dadosUsuario.nome}, precisamos confirmar o seu celular ${dadosUsuario.celular}. Para isso, um código será enviado para o seu celular.`;
+                document.getElementById('mensagem-email').textContent = `${dadosUsuario.nome} agora precisamos confirmar o seu e-mail ${dadosUsuario.email}. Para isso, um código será enviado para o seu e-mail. Clique em ENVIAR CÓDIGO, digite o código recebido e clique em CONFIRMAR.`;
+            } else {
+                document.getElementById('mensagem-celular').textContent = 'Não informado';
+                document.getElementById('mensagem-email').textContent = 'Não informado';
+            }
+        }
+
+        // Função para verificar se ambos os códigos foram confirmados e habilitar o botão prosseguir
+        function verificarSePodeProsseguir() {
+            const celularConfirmado = !document.getElementById('confirmacao-celular').classList.contains('hidden');
+            const emailConfirmado = !document.getElementById('confirmacao-email').classList.contains('hidden');
+            
+            if (celularConfirmado && emailConfirmado) {
+                document.getElementById('prosseguir').classList.remove('hidden');
+            }
+        }
+
+        // Função para mover o foco para o próximo campo
+        function moverParaProximoCampo(event) {
+            const input = event.target;
+            if (input.value.length === 1) {
+                const nextInput = input.nextElementSibling;
+                if (nextInput && nextInput.tagName === 'INPUT') {
+                    nextInput.focus();
+                }
+            }
+        }
+
+        // Adiciona o evento de mover para o próximo campo para todos os inputs
+        function adicionarEventosInputs() {
+            const inputsCelular = document.querySelectorAll('#codigo-celular-recebido .input-group input');
+            const inputsEmail = document.querySelectorAll('#codigo-email-recebido .input-group input');
+
+            inputsCelular.forEach(input => input.addEventListener('input', moverParaProximoCampo));
+            inputsEmail.forEach(input => input.addEventListener('input', moverParaProximoCampo));
+        }
+
+        // Lógica para o envio de código e confirmação de celular
+        document.getElementById('enviar-codigo-celular').addEventListener('click', function() {
+            document.getElementById('codigo-celular-recebido').classList.remove('hidden');
+            document.getElementById('confirmar-celular-codigo').classList.remove('hidden');
+            document.getElementById('confirmacao-celular').classList.add('hidden');
+        });
+
+        document.getElementById('confirmar-celular-codigo').addEventListener('click', function() {
+            // Simulação de código correto (pode adicionar validação real)
+            document.getElementById('confirmacao-celular').classList.remove('hidden');
+            verificarSePodeProsseguir();
+        });
+
+        // Lógica para o envio de código e confirmação de e-mail
+        document.getElementById('enviar-codigo-email').addEventListener('click', function() {
+            document.getElementById('codigo-email-recebido').classList.remove('hidden');
+            document.getElementById('confirmar-email-codigo').classList.remove('hidden');
+            document.getElementById('confirmacao-email').classList.add('hidden');
+        });
+
+        document.getElementById('confirmar-email-codigo').addEventListener('click', function() {
+            // Simulação de código correto (pode adicionar validação real)
+            document.getElementById('confirmacao-email').classList.remove('hidden');
+            verificarSePodeProsseguir();
+        });
+
+        // Função para redirecionar para a quarta tela
+        function prosseguir() {
+            window.location.href = 'quarta-tela.html';
+        }
+
+        // Função para voltar à tela anterior
+        function voltar() {
+            window.history.back();
+        }
+
+        // Inicializar os eventos ao carregar a página
+        document.addEventListener('DOMContentLoaded', function() {
+            carregarDados();
+            adicionarEventosInputs();
+        });
+    </script>
+</body>
+</html>

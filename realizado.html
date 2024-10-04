@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Realizado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f1f1f1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            border: 1px solid #000;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-weight: bold; /* Texto em negrito */
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Cadastro Realizado com sucesso!</h2>
+        <p id="mensagem"></p>
+        <img src="clube.png" alt="Clube Pix">
+    </div>
+
+    <script>
+        // Recupera os dados do usuário do localStorage
+        const dadosUsuario = JSON.parse(localStorage.getItem('dadosUsuario'));
+        const nomeUsuario = dadosUsuario ? dadosUsuario.nome : 'Usuário'; // Fallback para "Usuário"
+
+        document.getElementById('mensagem').textContent = `${nomeUsuario}, você receberá um e-mail de confirmação. Seja bem-vindo ao ClubePix!`;
+    </script>
+</body>
+</html>
