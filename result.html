@@ -1,6 +1,8 @@
+<!-- result.html -->
 <!doctype html>
 <html>
 <head>
+    <title>FastProBR - Resultados</title>
     <style>
         body {
             background: linear-gradient(to right, #00aaff, #00ffcc);
@@ -20,21 +22,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
-        input[type="file"] {
-            margin: 20px 0;
-        }
-        input[type="submit"] {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 1.1em;
-            cursor: pointer;
-        }
-        input[type="submit"]:hover {
-            background-color: #0056b3;
-        }
         .response-content {
             text-align: left;
             margin-top: 20px;
@@ -46,15 +33,25 @@
             border-radius: 5px;
             overflow-x: auto;
         }
+        .files-list {
+            margin-top: 20px;
+            text-align: left;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>FastProBR - Extraindo Dados de Documentos para Cadastros</h1>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept="image/jpeg">
-            <input type="submit" value="Upload">
-        </form>
+        <h1>FastProBR - Resultados</h1>
+        <div class="response-content">
+            <h2>Dados do Arquivo .response:</h2>
+            <pre>{{response_content}}</pre>
+        </div>
+        <div class="files-list">
+            <h2>Arquivos Processados:</h2>
+            <ul>
+                {{files}}
+            </ul>
+        </div>
     </div>
 </body>
 </html>
